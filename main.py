@@ -114,10 +114,11 @@ class SQlite3_TaskList(object):
 	def show(self):
 		print '\n========= To-Do-List ========='
 		sorted_tasks = sorted(self.task_list.itervalues(), key=lambda task: task.created)
-		max_digits = max(len(str(k)) for k in self.task_list.iterkeys())
-		for task in sorted_tasks:
-			spaces = (max_digits - len(str(task.id))) * ' '
-			print task.show(spaces)
+		if len(self.task_list):
+			max_digits = max(len(str(k)) for k in self.task_list.iterkeys())
+			for task in sorted_tasks:
+				spaces = (max_digits - len(str(task.id))) * ' '
+				print task.show(spaces)
 		print '=========++++++++++++=========\n'
 
 	def close(self):
