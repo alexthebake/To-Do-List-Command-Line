@@ -54,6 +54,15 @@ class SQlite3_TaskList(object):
 
 	def checkStatus(self, status):
 		return True if int(status) not in [0,1,2] else False
+
+	def getStatus(self, status):
+		if type(status) is str:
+			if status in ['o','-','x']:
+				return {'o':'0','-':'1','x':'2'}[status]
+			elif int(status) in [0,1,2]:
+				return status
+		elif type(status) is int and status in [0,1,2]:
+			return str(status)
 	
 	def addTask(self, name):
 		created = str(time())
@@ -70,6 +79,7 @@ class SQlite3_TaskList(object):
 		self.n_tasks += 1
 
 	def updateTask(self, task_id, status):
+		status = self.getStatus(status)
 		if self.checkTaskId(task_id):
 			print 'Task ' + str(task_id) + ' not found...'
 			return
