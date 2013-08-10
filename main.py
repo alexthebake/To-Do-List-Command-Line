@@ -125,6 +125,12 @@ class SQlite3_TaskList(object):
 		self.conn.close()
 		sys.exit()
 
+class SQlite3_Tag(object):
+	def __init__(self, item):
+		self.tag_id = item[0]
+		self.created = item[1]
+		self.name = item[2]
+
 
 def user_addTask(task_list, name=None):
 	if name == None or name == "":
@@ -137,7 +143,7 @@ def user_updateTask(task_list, task_id=None, status=None):
 	if task_id == None or status == None:
 		update_task = raw_input('Enter id of task to update: ')
 		update_status = raw_input('Enter new status: ')
-		task_list.updateTask(int(update_task), int(update_status))
+		task_list.updateTask(int(update_task), update_status)
 	else:
 		task_list.updateTask(int(task_id), status)
 
