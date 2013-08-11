@@ -66,14 +66,13 @@ class SQlite3_TaskList(object):
 	
 	def addTask(self, name):
 		created = str(time())
-		sql = ('INSERT INTO ' + self.table_name + 
-			' (name, created) VALUES (\'' + name +'\','+ created + ')' )
-		self.cursor.execute(sql)
+		sql = "INSERT INTO " + self.table_name + " (name, created) VALUES (?,?)"
+		self.cursor.execute(sql, (name, created))
 		self.conn.commit()
 
 		# Use created time stamp as a unique id for new task
-		sql = 'SELECT * FROM ' + self.table_name + ' WHERE created=' + created
-		self.cursor.execute(sql)
+		sql = 'SELECT * FROM ' + self.table_name + ' WHERE created=?'
+		self.cursor.execute(sql, created)
 		item = self.cursor.fetchone()
 		self.task_list[item[0]] = SQlite3_Task(item)
 		self.n_tasks += 1
@@ -87,9 +86,8 @@ class SQlite3_TaskList(object):
 			print 'Not a valid status...'
 			return
 		
-		sql = ('UPDATE ' + self.table_name + 
-			' SET status='  + status + ' WHERE task_id=' + str(task_id))
-		self.cursor.execute(sql)
+		sql = 'UPDATE ' + self.table_name + ' SET status=? WHERE task_id=?'
+		self.cursor.execute(sql, (status, str(task_id)))
 		self.conn.commit()
 		
 		self.task_list[task_id].update(status)
@@ -98,8 +96,8 @@ class SQlite3_TaskList(object):
 		if task_id not in self.task_list:
 			print 'Task not found...'
 			return
-		sql = 'DELETE FROM ' + self.table_name + ' WHERE task_id='  + str(task_id)
-		self.cursor.execute(sql)
+		sql = 'DELETE FROM ' + self.table_name + ' WHERE task_id=?'
+		self.cursor.execute(sql, str(task_id))
 		self.conn.commit()
 		
 		del self.task_list[task_id]
@@ -109,9 +107,8 @@ class SQlite3_TaskList(object):
 		if self.checkTaskId(task_id):
 			print 'Task ' + str(task_id) + ' not found...'
 			return
-		sql = ('UPDATE ' + self.table_name + 
-			' SET name=\''  + name + '\' WHERE task_id=' + str(task_id))
-		self.cursor.execute(sql)
+		sql = 'UPDATE ' + self.table_name + ' SET name=? WHERE task_id=?'
+		self.cursor.execute(sql, (name, str(task_id)))
 		self.conn.commit()
 		
 		self.task_list[task_id].rename(name)
