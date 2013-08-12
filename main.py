@@ -80,7 +80,7 @@ class SQlite3_TaskList(object):
 	def updateTask(self, task_id, status):
 		status = self.getStatus(status)
 		if self.checkTaskId(task_id):
-			print 'Task ' + str(task_id) + ' not found...'
+			print 'Task', str(task_id), 'not found...'
 			return
 		if self.checkStatus(status):
 			print 'Not a valid status...'
@@ -96,8 +96,8 @@ class SQlite3_TaskList(object):
 		if task_id not in self.task_list:
 			print 'Task not found...'
 			return
-		sql = 'DELETE FROM ' + self.table_name + ' WHERE task_id=?'
-		self.cursor.execute(sql, str(task_id))
+		sql = 'DELETE FROM ' + self.table_name + ' WHERE task_id=' + str(task_id)
+		self.cursor.execute(sql)
 		self.conn.commit()
 		
 		del self.task_list[task_id]
