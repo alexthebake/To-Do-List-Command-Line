@@ -71,8 +71,8 @@ class SQlite3_TaskList(object):
 		self.conn.commit()
 
 		# Use created time stamp as a unique id for new task
-		sql = 'SELECT * FROM ' + self.table_name + ' WHERE created=?'
-		self.cursor.execute(sql, created)
+		sql = 'SELECT * FROM ' + self.table_name + ' WHERE created=' + created
+		self.cursor.execute(sql)
 		item = self.cursor.fetchone()
 		self.task_list[item[0]] = SQlite3_Task(item)
 		self.n_tasks += 1
