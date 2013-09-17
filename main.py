@@ -241,13 +241,15 @@ def main():
 
 def print_usage():
 	print 'Usage: todo [-achrsux] [args]\
-		  \n\t-a : Add Task (--add)\
+		  \n\t<NO ARGS>          : Show Task List\
+		  \n\t-a <name>          : Add Task (--add)\
+		  \n\t-u <id> <status>   : Update task (--update)\
+		  \n\t-x <id>            : Remove task (--remove)\
+		  \n\t-r <id> <new name> : Rename task (--rename)\n\t---\
 		  \n\t-c : Clear completed tasks (--clear)\
-		  \n\t-h : Help (--help)\
-		  \n\t-x : Remove task (--remove)\
-		  \n\t-r : Rename task (--rename)\
 		  \n\t-s : Start shell (--shell)\
-		  \n\t-u : Update task (--update)'
+		  \n\t-n : Fresh Database (--new) WARNING! Deletes prevoious list\
+		  \n\t-h : Help (--help)'
 
 if __name__ == '__main__':
 	main()
